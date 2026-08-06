@@ -1,0 +1,23 @@
+# Node modules
+**/node_modules/
+node_modules/
+
+# Ignore OS and editor files
+.DS_Store
+.vscode/
+Thumbs.db
+
+# Environment
+.env
+
+# Ignore build/dist folders
+dist/
+build/
+
+# Ignore large media files
+*.mp4
+my-landing/public/*.mp4
+
+# Lockfiles (optional)
+**/package-lock.json
+**/yarn.lock

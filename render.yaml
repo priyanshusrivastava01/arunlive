@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: arunlive-backend
+    env: node
+    rootDir: razorpay-backend
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://arunlive.com
+      - key: APP_BASE_URL
+        sync: false
