@@ -321,7 +321,7 @@ const JoinPopup = ({ name, isMobile }) => (
       fixed z-[9999] px-4 py-3 bg-white shadow-2xl border border-yellow-400 
       rounded-xl text-black font-semibold flex items-center gap-3 
       animate-fade-in-out 
-      ${isMobile ? "top-4 left-1/2 -translate-x-1/2" : "bottom-6 right-6"}
+      ${isMobile ? "bottom-20 left-4" : "bottom-6 right-6"}
     `}
   >
     <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
@@ -1312,7 +1312,7 @@ function PrivacyFooter() {
 /*********************************
  * STICKY OFFER BAR
  *********************************/
-function StickyOfferBar({ timeLeft, format }) {
+function StickyOfferBar({ timeLeft, format, popupName }) {
   return (
     <div
       className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md text-black py-2 px-4 flex flex-col sm:flex-row gap-2 sm:gap-6 sm:justify-between sm:items-center z-50 shadow-[0_0_20px_rgba(0,0,0,0.1)] border-t border-yellow-300"
@@ -1329,9 +1329,17 @@ function StickyOfferBar({ timeLeft, format }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-yellow-700 font-semibold">
+          <div className="flex items-center gap-2 text-yellow-700 font-semibold relative min-h-[28px]">
             <span>Ends In:</span>
             <span className="text-xl font-bold">{format(timeLeft)}</span>
+
+            {/* On Mobile: Popup appears strictly over the 'Ends In' timer area without covering Today's Price */}
+            {popupName && (
+              <div className="sm:hidden absolute inset-0 z-50 flex items-center justify-center gap-2 bg-white px-3 py-1 rounded-xl shadow-md border border-yellow-400 text-xs font-semibold text-black animate-fade-in-out whitespace-nowrap">
+                <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+                <span>{popupName} just joined now!</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -1683,7 +1691,7 @@ export default function LandingPage() {
         </section>
         <ScrollEndPopup />
         <PrivacyFooter />
-        <StickyOfferBar timeLeft={timeLeft} format={format} />
+        <StickyOfferBar timeLeft={timeLeft} format={format} popupName={popupName} />
       </div>
 
       {showGuaranteePopup && (
@@ -1693,8 +1701,9 @@ export default function LandingPage() {
 
 
       {popupName && (
-        <div className={`fixed ${isMobile ? "top-4 left-1/2 -translate-x-1/2" : "bottom-24 right-4"} z-[9999] bg-white px-4 py-2 rounded-xl shadow-lg border border-yellow-300 text-sm text-black animate-fade-in-out`}>
-          {popupName} just joined now!
+        <div className="hidden sm:flex fixed bottom-24 right-4 z-[9999] bg-white px-4 py-2.5 rounded-xl shadow-xl border border-yellow-300 text-sm text-black font-medium animate-fade-in-out items-center gap-2.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+          <span>{popupName} just joined now!</span>
         </div>
       )}
 
